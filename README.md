@@ -3,3 +3,5 @@ Add authentication to an application using Openshift's Internal Oauth Server via
 
 
 #Create Oauth Proxy Image from Jenkinsfile
+
+
