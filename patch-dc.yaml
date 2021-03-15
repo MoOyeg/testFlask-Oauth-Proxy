@@ -1,0 +1,22 @@
+spec:
+  template:
+    spec:
+      containers:
+      - name: oauth-proxy
+        image: 'quay.io/openshift/origin-oauth-proxy:4.1'
+        args:
+          - '-provider=openshift'
+          - '-https-address=:8888'
+          - '-http-address='
+          - '-email-domain=*'
+          - '-upstream=http://localhost:8080'
+          - '-tls-cert=/etc/tls/private/tls.crt'
+          - '-tls-key=/etc/tls/private/tls.key'
+          - '-cookie-secret-file=/etc/proxy/secrets/session_secret'
+          - '-openshift-service-account=default'
+          - '-openshift-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt'
+          - '-skip-auth-regex=^/metrics'
+        ports:
+          - name: oauth-proxy
+            containerPort: 8888
+            protocol: TCP
