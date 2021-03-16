@@ -1,7 +1,7 @@
 # testFlask-Oauth-Proxy
 Add authentication to an application using Openshift's Internal Oauth Server via Proxy.<br/> 
 Application used is:<br/>
-testFlask Application - https://link](https://github.com/MoOyeg/testFlask.
+testFlask Application - https://link](https://github.com/MoOyeg/testFlask.<br/>
 it's a flask application that shows how to run a flask application in Openshift.
 
 **Find More Information about Oauth Proxy and examples below:** <br/>
@@ -21,7 +21,7 @@ it's a flask application that shows how to run a flask application in Openshift.
   `oc new-build --strategy=docker -D="$OAUTH_DOCKERFILE" --name=oauth-proxy -n ${NAMESPACE_PROD}`
 
 ### 2 Create the Unencrypted Version of the Application for this demo.Please copy the steps from:<br/>
- [testFlask Application]([https://link](https://github.com/MoOyeg/testFlask.git))
+testFlask Application - https://link](https://github.com/MoOyeg/testFlask.<br/>
 - Steps Below might not be updated, See above link for updated steps
 ```
 oc adm new-project ${NAMESPACE_PROD}
@@ -46,13 +46,13 @@ oc annotate dc/$APP_NAME app.openshift.io/connects-to=$MYSQL_HOST -n $NAMESPACE_
 ```
 
 ### 3 We are using the Openshift Service CA to provide TLS Certificates for our service, if you have your own certs you can provide them. To understand more about the 
-[Openshift Service CA]([https://link](https://docs.openshift.com/container-platform/4.6/security/certificates/service-serving-certificate.html)):
+[Openshift Service CA](https://docs.openshift.com/container-platform/4.6/security/certificates/service-serving-certificate.html):
 
 - Annotate the Service to use the Openshift Serving CA provided certs and secrets<br/>
 `oc annotate service ${APP_NAME} service.beta.openshift.io/serving-cert-secret-name=${APP_NAME}-secret-tls -n ${NAMESPACE_PROD}`
 
 ### 4 For the OAuth Proxy to work we need to use our Service Account as an Oauth Client and provide a redirect uri when the internal oauth tries to callback. For the Redirect URI we will be using our Application Route. To understand more see 
-[Service Account as Oauth Client]([https://link](https://docs.openshift.com/container-platform/4.6/authentication/using-service-accounts-as-oauth-client.html))
+[Service Account as Oauth Client](https://docs.openshift.com/container-platform/4.6/authentication/using-service-accounts-as-oauth-client.html)
 
 - Annotate the ServiceAccount with an OauthRedirect Reference pointing to our Route.<br/>
 `oc -n ${NAMESPACE_PROD} annotate serviceaccount default serviceaccounts.openshift.io/oauth-redirectreference.first='{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"testflask"}}'`
