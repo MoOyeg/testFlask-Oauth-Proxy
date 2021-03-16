@@ -18,7 +18,8 @@ Application used is [testFlask Application]([https://link](https://github.com/Mo
 
   `oc new-build --strategy=docker -D="$OAUTH_DOCKERFILE" --name=oauth-proxy -n ${NAMESPACE_PROD}`
 
-### 2 Create the Unencrypted Version of the Application for this demo.Please copy the steps from [testFlask]([https://link](https://github.com/MoOyeg/testFlask.git))
+### 2 Create the Unencrypted Version of the Application for this demo.Please copy the steps from:
+[testFlask Application]([https://link](https://github.com/MoOyeg/testFlask.git))
 - Steps Below might not be updated, See above link for updated steps
 ```
 oc adm new-project ${NAMESPACE_PROD}
@@ -42,12 +43,14 @@ oc annotate dc/$APP_NAME app.openshift.io/connects-to=$MYSQL_HOST -n $NAMESPACE_
 
 ```
 
-### 3 We are using the Openshift Service CA to provide TLS Certificates for our service, if you have your own certs you can provide them. To understand more about the [Openshift Service CA]([https://link](https://docs.openshift.com/container-platform/4.6/security/certificates/service-serving-certificate.html)):
+### 3 We are using the Openshift Service CA to provide TLS Certificates for our service, if you have your own certs you can provide them. To understand more about the 
+[Openshift Service CA]([https://link](https://docs.openshift.com/container-platform/4.6/security/certificates/service-serving-certificate.html)):
 
 - Annotate the Service to use the Openshift Serving CA provided certs and secrets<br/>
 `oc annotate service ${APP_NAME} service.beta.openshift.io/serving-cert-secret-name=${APP_NAME}-secret-tls -n ${NAMESPACE_PROD}`
 
-### 4 For the OAuth Proxy to work we need to use our Service Account as an Oauth Client and provide a redirect uri when the internal oauth tries to callback. For the Redirect URI we will be using our Application Route.To understand more see [Service Account as Oauth Client]([https://link](https://docs.openshift.com/container-platform/4.6/authentication/using-service-accounts-as-oauth-client.html))
+### 4 For the OAuth Proxy to work we need to use our Service Account as an Oauth Client and provide a redirect uri when the internal oauth tries to callback. For the Redirect URI we will be using our Application Route. To understand more see 
+[Service Account as Oauth Client]([https://link](https://docs.openshift.com/container-platform/4.6/authentication/using-service-accounts-as-oauth-client.html))
 
 - Annotate the ServiceAccount with an OauthRedirect Reference pointing to our Route.<br/>
 `oc -n ${NAMESPACE_PROD} annotate serviceaccount default serviceaccounts.openshift.io/oauth-redirectreference.first='{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"testflask"}}'`
@@ -75,3 +78,8 @@ oc annotate dc/$APP_NAME app.openshift.io/connects-to=$MYSQL_HOST -n $NAMESPACE_
 
 ### Patch the Route to enable TLS Passthrough and to route to the Oauth Pod instead of the Application
    - `oc patch route/${APP_NAME} --patch "$(curl https://raw.githubusercontent.com/MoOyeg/testFlask-Oauth-Proxy/main/patch-route.yaml)" -n ${NAMESPACE_PROD}`
+
+
+### If working as expected opening the route should redirect to the interal Oauth Server.Note Route will be https if TLS was enabled above.
+ - You can get the route from:<br/>
+  `oc get routes -n ${NAMESPACE_PROD} ${APP_NAME} -o jsonpath='{.spec.host}'`
