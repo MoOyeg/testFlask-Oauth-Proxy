@@ -1,6 +1,8 @@
 # testFlask-Oauth-Proxy
 Add authentication to an application using Openshift's Internal Oauth Server via Proxy.<br/> 
-Application used is [testFlask Application]([https://link](https://github.com/MoOyeg/testFlask)) , it's a flask application that shows how to run a flask application in Openshift.
+Application used is:<br/>
+testFlask Application - https://link](https://github.com/MoOyeg/testFlask.
+it's a flask application that shows how to run a flask application in Openshift.
 
 **Find More Information about Oauth Proxy and examples below:** <br/>
 [Github oauth-Proxy](https://github.com/openshift/oauth-proxy.git)<br/>
