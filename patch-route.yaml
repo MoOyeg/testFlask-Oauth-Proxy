@@ -1,0 +1,6 @@
+spec:
+  port:
+    targetPort: proxy
+  tls:
+    termination: passthrough
+  wildcardPolicy: None
