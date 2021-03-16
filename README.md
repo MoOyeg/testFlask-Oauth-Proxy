@@ -18,7 +18,7 @@ Application used is [testFlask Application]([https://link](https://github.com/Mo
 
   `oc new-build --strategy=docker -D="$OAUTH_DOCKERFILE" --name=oauth-proxy -n ${NAMESPACE_PROD}`
 
-### 2 Create the Unencrypted Version of the Application for this demo.Please copy the steps from:
+### 2 Create the Unencrypted Version of the Application for this demo.Please copy the steps from:<br/>
  [testFlask Application]([https://link](https://github.com/MoOyeg/testFlask.git))
 - Steps Below might not be updated, See above link for updated steps
 ```
