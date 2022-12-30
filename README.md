@@ -42,7 +42,7 @@ it's a flask application that shows how to run a flask application in Openshift.
 
 ### 6 Patch the Application Deployment Config with the oauth-proxy sidecar.If you Create the image yourself remember to update the patch.
 
-   - `oc patch dc/${APP_NAME} --patch "$(curl https://raw.githubusercontent.com/MoOyeg/testFlask-Oauth-Proxy/main/patch-dc.yaml)" -n ${NAMESPACE_PROD}`
+   - `oc patch deploy/${APP_NAME} --patch "$(curl https://raw.githubusercontent.com/MoOyeg/testFlask-Oauth-Proxy/main/patch-dc.yaml)" -n ${NAMESPACE_PROD}`
 
 ### 7 Patch the Service with the new Oauth Proxy Port
 
@@ -50,10 +50,10 @@ it's a flask application that shows how to run a flask application in Openshift.
 
 ### 8 Mount the Service CA Secret on the Oauth Proxy Container
 
-   - `oc set volume dc/${APP_NAME} --add --containers=oauth-proxy -t=secret --secret-name=${APP_NAME}-secret-tls --mount-path=/etc/tls/private -n ${NAMESPACE_PROD}`
+   - `oc set volume deploy/${APP_NAME} --add --containers=oauth-proxy -t=secret --secret-name=${APP_NAME}-secret-tls --mount-path=/etc/tls/private -n ${NAMESPACE_PROD}`
 
 ### 9 Mount the Cookie Secret on the Oauth Proxy Container
-   - `oc set volume dc/${APP_NAME} --add --containers=oauth-proxy -t=secret --secret-name=${NAMESPACE_PROD}-proxy --mount-path=/etc/proxy/secrets -n ${NAMESPACE_PROD}`
+   - `oc set volume deploy/${APP_NAME} --add --containers=oauth-proxy -t=secret --secret-name=${NAMESPACE_PROD}-proxy --mount-path=/etc/proxy/secrets -n ${NAMESPACE_PROD}`
 
 
 ### Patch the Route to enable TLS Passthrough and to route to the Oauth Pod instead of the Application
