@@ -20,30 +20,8 @@ it's a flask application that shows how to run a flask application in Openshift.
 
   `oc new-build --strategy=docker -D="$OAUTH_DOCKERFILE" --name=oauth-proxy -n ${NAMESPACE_PROD}`
 
-### 2 Create the Unencrypted Version of the Application for this demo.Please copy the steps from:<br/>
-testFlask Application - https://link](https://github.com/MoOyeg/testFlask.<br/>
-- Steps Below might not be updated, See above link for updated steps
-```
-oc adm new-project ${NAMESPACE_PROD}
-
-oc create secret generic my-secret --from-literal=MYSQL_USER=$MYSQL_USER --from-literal=MYSQL_PASSWORD=$MYSQL_PASSWORD -n $NAMESPACE_PROD
-
-oc new-app $MYSQL_HOST --env=MYSQL_DATABASE=$MYSQL_DATABASE -l db=mysql -l app=testflask -n $NAMESPACE_PROD --as-deployment-config=true
-
-oc set env dc/$MYSQL_HOST --from=secret/my-secret -n $NAMESPACE_PROD
-
-oc new-app https://github.com/MoOyeg/testFlask.git --name=$APP_NAME -l app=testflask --strategy=source --env=APP_CONFIG=gunicorn.conf.py --env=APP_MODULE=testapp:app --env=MYSQL_HOST=$MYSQL_HOST --env=MYSQL_DATABASE=$MYSQL_DATABASE --as-deployment-config=true -n $NAMESPACE_PROD
-
-oc expose svc/$APP_NAME -n $NAMESPACE_PROD
-
-oc set env dc/$APP_NAME --from=secret/my-secret -n $NAMESPACE_PROD
-
-oc label dc/$APP_NAME app.kubernetes.io/part-of=$APP_NAME -n $NAMESPACE_PROD
-oc label dc/$MYSQL_HOST app.kubernetes.io/part-of=$APP_NAME -n $NAMESPACE_PROD
-oc annotate dc/$APP_NAME app.openshift.io/connects-to=$MYSQL_HOST -n $NAMESPACE_PROD
-
-
-```
+### 2 Create the Unencrypted Version of the Application for this demo.Please run steps you require from 1-10:  
+[TestFlask Application Link](https://github.com/MoOyeg/testFlask)
 
 ### 3 We are using the Openshift Service CA to provide TLS Certificates for our service, if you have your own certs you can provide them. To understand more about the 
 [Openshift Service CA](https://docs.openshift.com/container-platform/4.6/security/certificates/service-serving-certificate.html):
