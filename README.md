@@ -20,7 +20,7 @@ it's a flask application that shows how to run a flask application in Openshift.
 
   `oc new-build --strategy=docker -D="$OAUTH_DOCKERFILE" --name=oauth-proxy -n ${NAMESPACE_PROD}`
 
-### 2 Create the Unencrypted Version of the Application for this demo.Please run steps you require from 1-10:  
+### 2 Create the Unsecured Version of the Application for this demo.Please run steps you require from 1-10:  
 [TestFlask Application Link](https://github.com/MoOyeg/testFlask)
 
 ### 3 We are using the Openshift Service CA to provide TLS Certificates for our service, if you have your own certs you can provide them. To understand more about the 
