@@ -1,5 +1,6 @@
 spec:
   ports:
-    - protocol: TCP
+    - name: oauth-proxy
+      protocol: TCP
       port: 8888
-      targetPort: oauth-proxy
+      targetPort: 8080
