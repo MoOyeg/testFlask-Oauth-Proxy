@@ -88,7 +88,7 @@ Application used is:
    ```
 
 
-- If working as expected opening the route should redirect to the interal Oauth Server.Note Route will be https if TLS was enabled above.
+- If working as expected opening the route should redirect to the interal Oauth Server.**Please note Route will be https if TLS was enabled above**.
    - You can get the route from:  
       ```bash
       oc get routes -n ${NAMESPACE_DEV} ${APP_NAME} -o jsonpath='{.spec.host}'
