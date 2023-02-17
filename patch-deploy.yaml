@@ -15,11 +15,9 @@ spec:
           - '-cookie-secret-file=/etc/proxy/secrets/session_secret'
           - '-openshift-service-account=default'
           - '-openshift-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt'
-          - '-skip-auth-regex=^/metrics'
-          - '-skip-auth-regex=^/health'
-          - '-skip-auth-regex=^/ready'
-          - '-skip-auth-regex=^/error.*'
-          - '-skip-auth-regex=^/logout.*' 
+          - '-skip-auth-regex=^/metrics$'
+          - '-skip-auth-regex=^/health$'
+          - '-skip-auth-regex=^/ready$'
         ports:
           - name: oauth-proxy
             containerPort: 8888
